@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرح ضغط الصوت MP3 | مشروع نظم الوسائط المتعددة</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<!-- نحافظ على نفس كتلة التنسيق الداخلية كما في jpeg.html -->
+<style>
+  /* تنسيق المقالات */
+  .step {
+    max-width: 900px;
+    margin: 50px auto;
+    background: #fdfdfd;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  }
+  .step img {
+    display: block;
+    margin: 25px auto;
+    width: 85%;
+    border-radius: 12px;
+  }
+
+  .video-tutorial video {
+    width: 80%;
+    border-radius: 15px;
+    margin: 20px auto;
+    display: block;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  }
+</style>
+
+<body>
+  <!-- رأس الصفحة -->
+  <header class="main-header">
+    <img src="media/logo.webp" alt="شعار الموقع" class="logo">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="jpeg.html">كيف يعمل JPEG؟</a></li>
+        <li><a href="mp3.html">كيف يعمل MP3؟</a></li>
+        <li><a href="index.html#about-us">عن المشروع</a></li>
+        <li><a href="login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- مقدمة الصفحة -->
+    <section id="mp3-section" class="hero fade-section" style="align-items: center; justify-content: center; background: linear-gradient(to bottom, #4893de, #004e89); color: white; text-align: center;">
+      <h2 style="">ضغط الصوت MP3: مثال عملي من المقرر</h2>
+      <p>
+        كما تناولنا ضغط الصور في <strong>JPEG</strong>، يقدم <strong>MP3</strong> فكرة مشابهة للصوت:
+        تصغير الحجم مع الحفاظ على جودة مقبولة للاستماع والبث والتخزين.
+      </p>
+      <p>
+        ستتعرف هنا على المبدأ السمعي الذي يعتمد عليه MP3 وخطوات العمل مع أمثلة عملية
+        ومقاطع صوتية بمعدلات بت مختلفة للمقارنة.
+      </p>
+      <a href="#hello" class="cta-btn">ابدأ رحلة شرح MP3</a>
+    </section>
+
+    <!-- مقدمة تربط بالمقرر -->
+    <section id="hello" class="steps-container">
+      <section class="intro fade-section">
+        <h1 id="">شرح ضغط الصوت MP3</h1>
+        <p style="font-size: 1.2em;">من العينة الرقمية إلى الملف المضغوط</p>
+      </section>
+
+      <div class="fade-section">
+        <h2 style="text-align: center; color: #004e89; font-size: 2em; margin-bottom: 25px;">المراحل الأساسية</h2>
+        <p style="text-align:center; max-width:800px; margin:0 auto 40px; line-height:1.9;">
+          سنعرض باختصار مراحل ضغط الصوت وفق معيار <strong>MP3</strong> مع ربط المفاهيم بما تم شرحه في المقرر.
+        </p>
+      </div>
+
+      <!-- الخطوة 1 -->
+      <article class="step fade-section">
+        <h3>الخطوة الأولى: التقطيع والكمّية (Sampling & Quantization)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          يبدأ المسار بتحويل الإشارة الصوتية التماثلية إلى عينات رقمية بتردد تقطيع مناسب
+          (مثل 44.1 kHz)، ثم تمثيل كل عينة بعدد محدد من البتات. هذه المرحلة تحدد الدقة الأساسية وجودة التسجيل.
+        </p>
+        <img src="media/images/mp3/1.webp" alt="رسم يوضح أخذ العينات والكمّية">
+      </article>
+
+      <!-- الخطوة 2 -->
+      <article class="step fade-section">
+        <h3>الخطوة الثانية: التحليل الطيفي وتقسيم النطاقات</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          يتم تحليل الإشارة إلى نطاقات ترددية أدقّ باستخدام مرشحات/تحويلات طيفية.
+          هذا يسمح بتحديد أين تقع الطاقة الصوتية فعلاً، تمهيداً لتوزيع البتات بكفاءة أعلى.
+        </p>
+        <img src="media/images/mp3/2.webp" alt="مخطط للتحليل الطيفي وتقسيم النطاقات">
+      </article>
+
+      <!-- الخطوة 3 -->
+      <article class="step fade-section">
+        <h3>الخطوة الثالثة: النموذج السمعي والتورية (Psychoacoustics)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          يعتمد MP3 على خصائص الإدراك السمعي مثل منحنيات تساوي الحساسية والتورية الترددية والزمنية.
+          تُزال التفاصيل التي لا يدركها المستمع في وجود نغمات أقوى، مما يحقق ضغطاً كبيراً دون تأثير ملحوظ.
+        </p>
+        <img src="media/images/mp3/3.webp" alt="تأثير التورية السمعية على إدراك الترددات">
+      </article>
+
+      <!-- الخطوة 4 -->
+      <article class="step fade-section">
+        <h3>الخطوة الرابعة: تخصيص البتات والترميز</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          تُعطى البتات للأجزاء الأكثر أهمية سمعياً، ثم تُرمَّز البيانات بطرائق فعّالة
+          مثل ترميز هوفمان مع تنظيم الإطارات. النتيجة ملف أصغر بكثير مع جودة مناسبة للاستخدام.
+        </p>
+        <img src="media/images/mp3/4.webp" alt="مخطط تخصيص البتات والترميز في MP3">
+      </article>
+
+      <!-- مقارنة سمعية (بنفس نمط البطاقات .step) -->
+      <article class="step fade-section audio-demo">
+        <h3>جرّب الفرق بنفسك: نفس المقطع بمعدلات بت مختلفة</h3>
+        <p style="text-align:center; margin-bottom:20px;">استخدم المشغلات للاستماع للفروقات.</p>
+
+        <div class="audio-grid">
+          <div class="audio-cell">
+            <strong>الأصلي (WAV)</strong>
+            <audio controls preload="metadata">
+              <source src="media/audio/sample_original.wav" type="audio/wav">
+            </audio>
+          </div>
+
+          <div class="audio-cell">
+            <strong>MP3 — 192 kbps</strong>
+            <audio controls preload="metadata">
+              <source src="media/audio/sample_192.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+
+          <div class="audio-cell">
+            <strong>MP3 — 96 kbps</strong>
+            <audio controls preload="metadata">
+              <source src="media/audio/sample_96.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+
+          <div class="audio-cell">
+            <strong>MP3 — 32 kbps</strong>
+            <audio controls preload="metadata">
+              <source src="media/audio/sample_32.mp3" type="audio/mpeg">
+            </audio>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- الفيديو التعليمي -->
+    <section class="video-tutorial intro">
+      <h2>شاهد الشرح بالفيديو</h2>
+      <p>فيديو سريع يختصر الفكرة بصرياً مع أمثلة.</p>
+
+      <video controls style="width: 80%; max-width: 900px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);"
+             poster="media/images/mp3/poster.webp">
+        <source src="media/video/mp3_intro.mp4" type="video/mp4">
+        <!-- <track kind="subtitles" src="media/captions/mp3_intro_ar.vtt" srclang="ar" label="العربية" default> -->
+      </video>
+
+      <div style="text-align:center; margin:40px 0;">
+        <a href="index.html" class="cta-btn">العودة إلى الصفحة الرئيسية</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- تذييل -->
+  <footer class="main-footer">
+    <p>© 2025 Multimedia System Explainer — الجامعة الافتراضية السورية (SVU)</p>
+  </footer>
+
+  <!-- نفس سكربت تأثير الظهور التدريجي للأقسام -->
+  <script>
+    const sections = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>

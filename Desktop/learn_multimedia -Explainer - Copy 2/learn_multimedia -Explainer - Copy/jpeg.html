@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شرح خوارزمية JPEG | مشروع نظم الوسائط المتعددة</title>
+  <link rel="stylesheet" href="styles/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+  <style>
+
+    /* تنسيق المقالات */
+    .step {
+      max-width: 900px;
+      margin: 50px auto;
+      background: #fdfdfd;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
+    .step img {
+      display: block;
+      margin: 25px auto;
+      width: 85%;
+      border-radius: 12px;
+    }
+
+    .video-tutorial video {
+      width: 80%;
+      border-radius: 15px;
+      margin: 20px auto;
+      display: block;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+  </style>
+
+<body>
+  <!-- رأس الصفحة -->
+   <header class="main-header">
+    <img src="media/logo.webp" alt="شعار الموقع" class="logo">
+    <nav>
+      <ul class="nav-links">
+        <li><a href="index.html">الرئيسية</a></li>
+        <li><a href="jpeg.html">كيف يعمل JPEG؟</a></li>
+        <li><a href="mp3.html">كيف يعمل MP3؟</a></li>
+        <li><a href="index.html#about-us">عن المشروع</a></li>
+        <li><a href="login.html">تسجيل الدخول</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <!-- مقدمة الصفحة -->
+   
+   <section id="jpeg-section" class="hero fade-section" style="align-items: center; justify-content: center; background: linear-gradient(to bottom, #4893de, #004e89); color: white; text-align: center;">
+    <h2 style="">خوارزمية JPEG: تطبيق عملي لمفهوم ضغط الصور</h2>
+    <p>
+      من بين التطبيقات العملية المهمة التي يغطيها مقرر نظم الوسائط المتعددة  
+      مفهوم ضغط البيانات الرقمية بهدف تقليل حجم الملفات دون التأثير الملحوظ على جودتها.  
+      ولعلّ خوارزمية <strong>JPEG</strong> هي المثال الأشهر لذلك، إذ تُستخدم يوميًا في ملايين الصور عبر الإنترنت.
+    </p>
+    <p>
+      في هذا المشروع ستتعرف على المبدأ العلمي والتقني الذي يجعل JPEG قادرة على ضغط الصور  
+      مع الحفاظ على التفاصيل التي تراها العين البشرية.  
+      يمكنك بدء رحلة الشرح التفصيلي من خلال الزر أدناه:
+    </p>
+    <a href="#hello" class="cta-btn">ابدأ رحلة شرح JPEG</a>
+  </section>
+
+
+
+
+    <!-- مقدمة تربط بالمقرر -->
+    <section class="steps-container">
+      <section class="intro fade-section">
+        <h1 id="hello">شرح خوارزمية ضغط JPEG</h1>
+        <p style="font-size: 1.2em;">رحلة تفصيلية من البيكسل إلى الملف المضغوط</p>
+     </section>
+      <div class="fade-section">
+              <h2 style="text-align: center; color: #004e89; font-size: 2em; margin-bottom: 25px;">الخطوات الأربع الأساسية</h2>
+
+      <p style="text-align:center; max-width:800px; margin:0 auto 40px; line-height:1.9;">
+        في هذا الشرح سنتناول الجانب العملي من <strong>ضغط الصور الرقمية</strong>،  
+        وهو أحد المفاهيم الأساسية في <strong>مقرر نظم الوسائط المتعددة</strong>،  
+        من خلال تحليل المراحل الأربع التي تمر بها خوارزمية <strong>JPEG</strong>.
+      </p>
+
+      </div>
+
+      <!-- الخطوة الأولى -->
+      <article class="step fade-section">
+        <h3>الخطوة الأولى: تحويل فضاء الألوان (Color Space Transformation)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          الخطوة الأولى هي تحويل بيانات الصورة من نموذج اللون المعتاد RGB (أحمر، أخضر، أزرق)
+          إلى نموذج YCbCr. هذا النموذج يفصل 
+          <span style="font-weight:bold;">شدة الإضاءة (Y)</span> 
+          عن 
+          <span style="font-weight:bold;">معلومات اللون (Cb و Cr)</span>.
+          العين البشرية أكثر حساسية للتغير في الإضاءة منها للّون،
+          وهذا الفصل يسمح لنا بضغط معلومات اللون بشكل أكبر لاحقًا دون أن نلاحظ فرقًا كبيرًا.
+        </p>
+        <img src="media/images/1.webp" alt="رسم توضيحي لتحويل الألوان من RGB إلى YCbCr">
+      </article>
+
+      <!-- الخطوة الثانية -->
+      <article class="step fade-section">
+        <h3>الخطوة الثانية: تحويل جيب التمام المتقطع (DCT)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          بعد فصل الألوان، يتم تقسيم كل مكون (Y, Cb, Cr) إلى مربعات صغيرة بحجم 8×8 بيكسل.
+          يتم تطبيق معادلة رياضية معقدة تسمى DCT على كل مربع.
+          هذه المعادلة لا تغيّر البيكسلات نفسها، بل تحولها من تمثيل مكاني (قيم بيكسلات)
+          إلى تمثيل ترددي (frequencies)، حيث يتم تجميع معظم "الطاقة" البصرية للمربع
+          في الزاوية العلوية اليسرى.
+        </p>
+        <img src="media/images/2.webp" alt="رسم توضيحي لتطبيق DCT على مربع 8x8">
+      </article>
+
+      <!-- الخطوة الثالثة -->
+      <article class="step fade-section">
+        <h3>الخطوة الثالثة: التكميم (Quantization)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          هذه هي الخطوة الأساسية التي يحدث فيها الضغط الفعلي وفقدان البيانات (<strong>Lossy</strong>).
+          يتم قسمة قيم الترددات الناتجة من DCT على قيم موجودة في ما يسمى <strong>جدول التكميم</strong>.
+          الترددات العالية (التي تمثل التفاصيل الدقيقة التي لا تلاحظها العين)
+          يتم قسمتها على أرقام كبيرة، مما يجعل ناتجها صفراً أو رقماً صغيراً جداً.
+          هكذا يتم التخلص من التفاصيل غير المهمة وتقليل حجم البيانات بشكل هائل.
+        </p>
+        <img src="media/images/3.webp" alt="مثال على عملية التكميم">
+      </article>
+
+      <!-- الخطوة الرابعة -->
+      <article class="step fade-section">
+        <h3>الخطوة الرابعة: الترميز (Entropy Coding)</h3>
+        <p style="text-align: justify; text-indent: 25px;">
+          في الخطوة الأخيرة، يتم أخذ البيانات المضغوطة من الخطوة السابقة وتنظيمها بشكل أكثر كفاءة
+          باستخدام خوارزميات ضغط بدون فقدان (<strong>Lossless</strong>)
+          مثل ترميز <strong>هوفمان (Huffman Coding)</strong>.
+          هذه العملية تشبه تحويل جملة طويلة ومتكررة إلى اختصارات،
+          مما يقلل الحجم النهائي للملف دون ضياع أي بيانات إضافية.
+        </p>
+        <img src="media/images/4.webp" alt="فكرة ترميز هوفمان">
+      </article>
+    </section>
+
+    <!-- الفيديو التعليمي -->
+    <section class="video-tutorial intro ">
+      <h2>شاهد الشرح الكامل بالفيديو</h2>
+      <p>فيديو تعليمي يوضح جميع الخطوات بشكل عملي وبصري.</p>
+
+      <video controls style="width: 80%; max-width: 900px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);">
+         <source src="media/video/Explain.mp4" type="video/mp4">
+
+      </video>
+
+      <div style="text-align:center; margin:40px 0;">
+        <a href="index.html" class="cta-btn">العودة إلى الصفحة الرئيسية</a>
+      </div>
+    </section>
+  </main>
+
+  <!-- تذييل -->
+  <footer  class="main-footer">
+    <p>© 2025 Multimedia System Explainer —  الجامعة الافتراضية السورية (SVU)</p>
+  </footer>
+
+    <!-- سكربت تأثير الظهور التدريجي للأقسام -->
+  <script>
+    const sections = document.querySelectorAll('.fade-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+ 
+</body>
+</html>

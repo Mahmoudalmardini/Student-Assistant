@@ -1,0 +1,320 @@
+html {
+  scroll-behavior: smooth;
+}
+
+
+/* إعداد الخطوط والألوان */
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: #ffffff;
+  color: #222;
+  margin: 0;
+  line-height: 1.8;
+  scroll-behavior: smooth; /* انتقال ناعم بين الأقسام */
+}
+
+/* الرأس */
+.main-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: #1c4186;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+  position: absolute;
+  right: 30px;
+  height: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.3s ease, transform 0.2s ease;
+  padding: 5px 10px;
+}
+
+.nav-links a:hover {
+  color: #ffd700;
+  transform: scale(1.1);
+}
+
+/* تمييز الرابط النشط */
+.nav-links a.active {
+  border-bottom: 3px solid #FFD700;
+  padding-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+  .main-header {
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .logo {
+    position: static;
+    transform: none;
+    margin: 10px auto;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+}
+
+/* منطقة المقدمة الرئيسية */
+.hero {
+  background: linear-gradient(to bottom right, #004e89, #007bff);
+  color: white;
+  text-align: center;
+  padding: 120px 20px;
+  position: relative;
+}
+
+.hero-text h1 {
+  font-size: 2.8em;
+  margin-bottom: 15px;
+}
+
+.hero-text p {
+  font-size: 1.2em;
+  line-height: 1.9;
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+
+.cta-btn {
+  display: inline-block;
+  background-color: #FFD700;
+  color: #004e89;
+  padding: 12px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+  background-color: #ffea00;
+  transform: scale(1.05);
+}
+
+/* أقسام المحتوى */
+.intro {
+  padding: 60px 40px;
+  text-align: center;
+  background-color: #f4f4f4;
+}
+
+.intro:nth-of-type(even) {
+  background-color: #f4f7fb; /* تباين بسيط بين الأقسام */
+}
+
+.intro h2 {
+  color: #004e89;
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.intro p {
+  font-size: 1.1em;
+  line-height: 1.9;
+  max-width: 900px;
+  margin: 0 auto 15px;
+  text-align: justify;
+}
+
+.intro-img {
+  width: 70%;
+  margin-top: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+/* أقسام الشرح (مثل jpeg.html) */
+.steps-container {
+  padding: 60px 40px;
+  background-color: #fff;
+}
+
+.step {
+  margin-bottom: 60px;
+}
+
+.step h3 {
+  color: #003087;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.step p {
+  max-width: 900px;
+  margin: 10px auto;
+  line-height: 1.9;
+  font-size: 1.1em;
+  text-align: justify;
+}
+
+.step img {
+  display: block;
+  width: 70%;
+  margin: 20px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* قسم الفيديو */
+.video-tutorial {
+  background-color: #f4f4f4;
+  padding: 60px 40px;
+  text-align: center;
+}
+
+.video-placeholder {
+  background-color: #ccc;
+  width: 80%;
+  height: 400px;
+  margin: 20px auto;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* تذييل الصفحة */
+.main-footer {
+  text-align: center;
+  background-color: #004e89;
+  color: white;
+  padding: 20px;
+  font-size: 0.95em;
+}
+
+.main-footer p {
+  margin: 0;
+}
+
+
+
+#video-section video {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 1s ease-out forwards;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+#video-section video {
+  width: 80%;
+  max-width: 900px;
+  height: 600px; /* عدّل الرقم حسب شكل موقعك */
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
+}
+
+#video-section video:hover {
+  transform: scale(1.02);
+}
+
+/* صورة قسم "ما هو مقرر نظم الوسائط المتعددة؟" */
+.intro-img {
+  display: block;              /* يجعل الصورة وسطياً */
+  margin: 30px auto;           /* توسيط أفقي + مسافة فوق وتحت */
+  width: 80%;                  /* حجم مناسب للشاشات العادية */
+  max-width: 900px;            /* لا تتجاوز هذا الحجم */
+   height: 600px;
+  border-radius: 15px;         /* حواف ناعمة */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); /* ظل خفيف أنيق */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* تأثير عند تمرير الماوس */
+.intro-img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .intro-img {
+    width: 90%;
+    margin: 20px auto;
+  }
+}
+
+
+.cta-btn {
+  display: inline-block;
+  margin-top: 15px;
+  background: linear-gradient(90deg, #FFD700, #ffcc00);
+  color: #004e89;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.4s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(90deg, #ffdd33, #ffe680);
+}
+
+
+/* الحالة الأساسية للعناصر اللي بدنا نعملها fade-in */
+.fade-section {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+/* لما يصير العنصر ظاهر */
+.fade-section.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* تحسين عرض مشغلات الصوت ضمن البطاقة */
+.audio-demo .audio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-top: 15px;
+}
+
+.audio-demo .audio-cell audio {
+  width: 100%;
+  max-width: 420px;
+  display: block;
+  margin-top: 8px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
