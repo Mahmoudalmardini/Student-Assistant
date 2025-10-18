@@ -99,4 +99,24 @@ export class UsersRepository extends AbstractRepository<UserDocument> {
       { new: true }
     );
   }
+
+  async findAll(filter: any = {}): Promise<UserDocument[]> {
+    return this.userModel.find(filter).select('-password -emailVerificationToken -passwordResetToken').exec();
+  }
+
+  async updateUser(id: string, updateData: any): Promise<UserDocument | null> {
+    return this.userModel.findByIdAndUpdate(
+      id,
+      { $set: updateData },
+      { new: true, runValidators: true }
+    ).select('-password -emailVerificationToken -passwordResetToken');
+  }
+
+  async deleteUser(id: string): Promise<UserDocument | null> {
+    return this.userModel.findByIdAndDelete(id);
+  }
+
+  async countByRole(role: UserRole): Promise<number> {
+    return this.userModel.countDocuments({ role });
+  }
 }

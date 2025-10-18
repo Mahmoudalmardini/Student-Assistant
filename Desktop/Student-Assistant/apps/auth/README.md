@@ -8,8 +8,9 @@ A robust authentication microservice built with NestJS, MongoDB, and JWT for the
 - User registration with email verification
 - Secure login with account lockout protection
 - JWT-based authentication with refresh tokens
-- Role-based access control (Student, Teacher, Admin)
+- Hierarchical role-based access control (Super Admin, Admin, Coordinators, Students)
 - Password reset functionality
+- User management by Super Admin
 
 ### 🛡️ Security Features
 - Strong password requirements
@@ -86,18 +87,48 @@ A robust authentication microservice built with NestJS, MongoDB, and JWT for the
 | POST | `/auth/verify-email/:token` | Verify email address | No |
 | POST | `/auth/resend-verification` | Resend verification email | No |
 
-### Role-based Endpoints
+### Role-based Test Endpoints
 
 | Method | Endpoint | Description | Auth Required | Role Required |
 |--------|----------|-------------|---------------|---------------|
-| POST | `/auth/test-admin` | Test admin access | Yes | Admin |
-| POST | `/auth/test-teacher` | Test teacher access | Yes | Teacher/Admin |
+| POST | `/auth/test-super-admin` | Test super admin access | Yes | Super Admin |
+| POST | `/auth/test-admin` | Test admin access | Yes | Admin/Super Admin |
+
+### User Management Endpoints (Super Admin Only)
+
+| Method | Endpoint | Description | Auth Required | Role Required |
+|--------|----------|-------------|---------------|---------------|
+| POST | `/auth/admin/create-admin` | Create new admin user | Yes | Super Admin |
+| POST | `/auth/admin/create-coordinator` | Create new coordinator | Yes | Super Admin |
+| POST | `/auth/admin/create-student` | Create new student | Yes | Super Admin |
+| GET | `/auth/admin/users` | List all users (with filtering) | Yes | Super Admin |
+| PATCH | `/auth/admin/users/:id` | Update user details | Yes | Super Admin |
+| DELETE | `/auth/admin/users/:id` | Delete user | Yes | Super Admin |
 
 ## User Roles
 
-- **Student**: Default role for regular users
-- **Teacher**: Can access teacher-specific features
-- **Admin**: Full administrative access
+The application uses a hierarchical role-based access control system:
+
+### Role Hierarchy
+```
+SUPER_ADMIN (highest privilege)
+  └── ADMIN
+      ├── COLLEGE_COORDINATOR
+      ├── TRANSPORTATION_COORDINATOR
+      └── STUDENT
+```
+
+### Role Descriptions
+
+- **Super Admin**: Highest privilege level; responsible for managing all users including admins, coordinators, and students. Can create, update, and delete any user account.
+  
+- **Admin**: Administrative access to manage application features and coordinate with college and transportation coordinators.
+  
+- **College Coordinator**: Manages college-specific administrative tasks and student affairs.
+  
+- **Transportation Coordinator**: Manages transportation-related services and schedules for students.
+  
+- **Student**: Default role for regular users with access to student-specific features.
 
 ## Request/Response Examples
 
@@ -111,6 +142,55 @@ Content-Type: application/json
   "email": "john@example.com",
   "password": "SecurePass123!",
   "role": "student"
+}
+```
+
+### Create Admin (Super Admin Only)
+```bash
+POST /auth/admin/create-admin
+Authorization: Bearer <super_admin_access_token>
+Content-Type: application/json
+
+{
+  "username": "admin_user",
+  "email": "admin@university.edu",
+  "password": "Admin@123!"
+}
+```
+
+### Create Coordinator (Super Admin Only)
+```bash
+POST /auth/admin/create-coordinator
+Authorization: Bearer <super_admin_access_token>
+Content-Type: application/json
+
+{
+  "username": "coordinator_user",
+  "email": "coordinator@university.edu",
+  "password": "Coordinator@123!",
+  "coordinatorType": "college_coordinator"
+}
+```
+
+### List Users (Super Admin Only)
+```bash
+GET /auth/admin/users
+Authorization: Bearer <super_admin_access_token>
+
+# With role filter
+GET /auth/admin/users?role=student
+Authorization: Bearer <super_admin_access_token>
+```
+
+### Update User (Super Admin Only)
+```bash
+PATCH /auth/admin/users/64f1a2b3c4d5e6f7a8b9c0d1
+Authorization: Bearer <super_admin_access_token>
+Content-Type: application/json
+
+{
+  "role": "admin",
+  "email": "newemail@university.edu"
 }
 ```
 

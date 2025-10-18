@@ -29,8 +29,10 @@ export interface User {
 
 export enum UserRole {
   STUDENT = 'student',
-  TEACHER = 'teacher',
   ADMIN = 'admin',
+  COLLEGE_COORDINATOR = 'college_coordinator',
+  TRANSPORTATION_COORDINATOR = 'transportation_coordinator',
+  SUPER_ADMIN = 'super_admin',
 }
 
 export interface AuthResponse {

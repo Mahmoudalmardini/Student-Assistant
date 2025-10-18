@@ -84,7 +84,7 @@ export class AuthService implements IAuthService {
     };
   }
 
-  async validateUser(username: string, password: string): Promise<User | null> {
+  async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersRepo.findByUsername(username);
     if (!user) {
       return null;
@@ -229,7 +229,7 @@ export class AuthService implements IAuthService {
     // TODO: Send email verification email
   }
 
-  private async generateTokens(user: User): Promise<{ accessToken: string; refreshToken: string; expiresIn: string }> {
+  private async generateTokens(user: any): Promise<{ accessToken: string; refreshToken: string; expiresIn: string }> {
     const payload: JwtPayload = {
       sub: user._id.toString(),
       username: user.username,
@@ -266,5 +266,103 @@ export class AuthService implements IAuthService {
     if (attempts >= this.maxLoginAttempts) {
       this.logger.warn(`Account locked due to failed login attempts: ${username}`);
     }
+  }
+
+  // User Management Methods (Super Admin only)
+  async createUserByAdmin(userData: {
+    username: string;
+    email: string;
+    password: string;
+    role: string;
+  }): Promise<any> {
+    this.logger.log(`Admin creating new user: ${userData.username}`);
+
+    // Check if username already exists
+    const existingUser = await this.usersRepo.findByUsername(userData.username);
+    if (existingUser) {
+      throw new UserAlreadyExistsException(userData.username);
+    }
+
+    // Check if email already exists
+    const existingEmail = await this.usersRepo.findByEmail(userData.email);
+    if (existingEmail) {
+      throw new EmailAlreadyExistsException(userData.email);
+    }
+
+    // Hash password
+    const saltRounds = this.config.get<number>('bcryptSaltRounds', 12);
+    const hashedPassword = await bcrypt.hash(userData.password, saltRounds);
+
+    // Create user with email pre-verified
+    const user = await this.usersRepo.createUser({
+      username: userData.username,
+      email: userData.email,
+      password: hashedPassword,
+      role: userData.role as any,
+    });
+
+    // Auto-verify email for admin-created users
+    await this.usersRepo.verifyEmail(user.emailVerificationToken || '');
+
+    this.logger.log(`User created by admin: ${user.username} with role ${user.role}`);
+    
+    return user;
+  }
+
+  async listUsers(filter?: { role?: string }): Promise<any[]> {
+    this.logger.log('Fetching users list');
+    const queryFilter = filter?.role ? { role: filter.role } : {};
+    return this.usersRepo.findAll(queryFilter);
+  }
+
+  async updateUserById(userId: string, updateData: any): Promise<any> {
+    this.logger.log(`Updating user: ${userId}`);
+
+    const user = await this.usersRepo.findById(userId);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    // If updating username, check if new username exists
+    if (updateData.username && updateData.username !== user.username) {
+      const existingUser = await this.usersRepo.findByUsername(updateData.username);
+      if (existingUser) {
+        throw new UserAlreadyExistsException(updateData.username);
+      }
+    }
+
+    // If updating email, check if new email exists
+    if (updateData.email && updateData.email !== user.email) {
+      const existingEmail = await this.usersRepo.findByEmail(updateData.email);
+      if (existingEmail) {
+        throw new EmailAlreadyExistsException(updateData.email);
+      }
+    }
+
+    // Hash password if provided
+    if (updateData.password) {
+      const saltRounds = this.config.get<number>('bcryptSaltRounds', 12);
+      updateData.password = await bcrypt.hash(updateData.password, saltRounds);
+    }
+
+    const updatedUser = await this.usersRepo.updateUser(userId, updateData);
+    if (!updatedUser) {
+      throw new UserNotFoundException();
+    }
+
+    this.logger.log(`User updated: ${updatedUser.username}`);
+    return updatedUser;
+  }
+
+  async deleteUserById(userId: string): Promise<void> {
+    this.logger.log(`Deleting user: ${userId}`);
+
+    const user = await this.usersRepo.findById(userId);
+    if (!user) {
+      throw new UserNotFoundException();
+    }
+
+    await this.usersRepo.deleteUser(userId);
+    this.logger.log(`User deleted: ${user.username}`);
   }
 }
