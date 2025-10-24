@@ -1,0 +1,1009 @@
+{
+  "info": {
+    "name": "Student Assistant - Complete API Collection",
+    "description": "Comprehensive API collection for the Student Assistant System including all endpoints for frontend developers",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "description": "Base URL for the API"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "description": "JWT access token for authentication"
+    },
+    {
+      "key": "userId",
+      "value": "",
+      "description": "Current user ID"
+    },
+    {
+      "key": "busId",
+      "value": "",
+      "description": "Bus ID for testing"
+    },
+    {
+      "key": "routeId",
+      "value": "",
+      "description": "Route ID for testing"
+    },
+    {
+      "key": "collegeId",
+      "value": "",
+      "description": "College ID for testing"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "description": "Authentication endpoints for login and registration",
+      "item": [
+        {
+          "name": "Login - Super Admin",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login as Super Admin"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', response.access_token);",
+                  "    pm.collectionVariables.set('userId', response.user.id);",
+                  "    console.log('Login successful, token saved');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login - Student",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"STU2024001\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login as Student"
+          }
+        },
+        {
+          "name": "Login - Bus Driver",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"identifier\": \"driver_username\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            },
+            "description": "Login as Bus Driver"
+          }
+        },
+        {
+          "name": "Register New User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"username\": \"johndoe\",\n  \"password\": \"password123\",\n  \"role\": \"student\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            },
+            "description": "Register a new user"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Account Management",
+      "description": "Account management endpoints for creating and managing user accounts",
+      "item": [
+        {
+          "name": "Create Admin Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"admin\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"username\": \"johndoe_admin\",\n  \"password\": \"password123\",\n  \"confirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Create a new admin account"
+          }
+        },
+        {
+          "name": "Create Student Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"student\",\n  \"studentFirstName\": \"Alice\",\n  \"studentLastName\": \"Brown\",\n  \"universityId\": \"STU2024001\",\n  \"studentPassword\": \"password123\",\n  \"studentConfirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Create a new student account"
+          }
+        },
+        {
+          "name": "Create Bus Driver Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"bus_driver\",\n  \"driverFirstName\": \"Mike\",\n  \"driverLastName\": \"Johnson\",\n  \"driverUsername\": \"mikejohnson_driver\",\n  \"driverPassword\": \"password123\",\n  \"driverConfirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Create a new bus driver account"
+          }
+        },
+        {
+          "name": "Create Transportation Supervisor Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"transportation_supervisor\",\n  \"supervisorFirstName\": \"Jane\",\n  \"supervisorLastName\": \"Smith\",\n  \"supervisorUsername\": \"janesmith_supervisor\",\n  \"supervisorPassword\": \"password123\",\n  \"supervisorConfirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Create a new transportation supervisor account"
+          }
+        },
+        {
+          "name": "Create College Supervisor Account",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"role\": \"college_supervisor\",\n  \"supervisorFirstName\": \"Robert\",\n  \"supervisorLastName\": \"Wilson\",\n  \"supervisorUsername\": \"robertwilson_supervisor\",\n  \"supervisorPassword\": \"password123\",\n  \"supervisorConfirmPassword\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Create a new college supervisor account"
+          }
+        },
+        {
+          "name": "Get All Accounts",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts"]
+            },
+            "description": "Get all accounts (requires admin privileges)"
+          }
+        },
+        {
+          "name": "Get Accounts by Role",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/role/student",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "role", "student"]
+            },
+            "description": "Get accounts by specific role"
+          }
+        },
+        {
+          "name": "Get Account by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "{{userId}}"]
+            },
+            "description": "Get account by ID"
+          }
+        },
+        {
+          "name": "Update Account",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/accounts/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "{{userId}}"]
+            },
+            "description": "Update account information"
+          }
+        },
+        {
+          "name": "Delete Account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/accounts/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["accounts", "{{userId}}"]
+            },
+            "description": "Delete account (soft delete)"
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "description": "User management endpoints",
+      "item": [
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["users"]
+            },
+            "description": "Get all users"
+          }
+        },
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            },
+            "description": "Get user by ID"
+          }
+        },
+        {
+          "name": "Get Users by Role",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/role/student",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "role", "student"]
+            },
+            "description": "Get users by role"
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"Updated Name\",\n  \"lastName\": \"Updated Last Name\",\n  \"phoneNumber\": \"+1234567890\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            },
+            "description": "Update user information"
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/users/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["users", "{{userId}}"]
+            },
+            "description": "Delete user"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Academic Management",
+      "description": "Academic management endpoints for colleges",
+      "item": [
+        {
+          "name": "Create College",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"College of Engineering\",\n  \"description\": \"Engineering and Technology College\",\n  \"location\": \"Main Campus Building A\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/colleges",
+              "host": ["{{baseUrl}}"],
+              "path": ["colleges"]
+            },
+            "description": "Create a new college"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('collegeId', response.id);",
+                  "    console.log('College created with ID:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Colleges",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/colleges",
+              "host": ["{{baseUrl}}"],
+              "path": ["colleges"]
+            },
+            "description": "Get all colleges"
+          }
+        },
+        {
+          "name": "Get College by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/colleges/{{collegeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["colleges", "{{collegeId}}"]
+            },
+            "description": "Get college by ID"
+          }
+        },
+        {
+          "name": "Update College",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated College Name\",\n  \"description\": \"Updated description\",\n  \"location\": \"Updated location\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/colleges/{{collegeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["colleges", "{{collegeId}}"]
+            },
+            "description": "Update college information"
+          }
+        },
+        {
+          "name": "Delete College",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/colleges/{{collegeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["colleges", "{{collegeId}}"]
+            },
+            "description": "Delete college"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transportation Management",
+      "description": "Transportation management endpoints for buses, routes, and assignments",
+      "item": [
+        {
+          "name": "Create Route",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Route A - Campus to Downtown\",\n  \"description\": \"Main route connecting campus to downtown area\",\n  \"waypoints\": [\"Campus Gate\", \"Main Street\", \"Downtown Station\"],\n  \"distance\": 15.5,\n  \"estimatedDuration\": 45,\n  \"startPoint\": \"Campus Gate\",\n  \"endPoint\": \"Downtown Station\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/routes",
+              "host": ["{{baseUrl}}"],
+              "path": ["routes"]
+            },
+            "description": "Create a new route"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('routeId', response.id);",
+                  "    console.log('Route created with ID:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Routes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/routes",
+              "host": ["{{baseUrl}}"],
+              "path": ["routes"]
+            },
+            "description": "Get all routes"
+          }
+        },
+        {
+          "name": "Get Route by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/routes/{{routeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["routes", "{{routeId}}"]
+            },
+            "description": "Get route by ID"
+          }
+        },
+        {
+          "name": "Update Route",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Route Name\",\n  \"description\": \"Updated route description\",\n  \"distance\": 20.0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/routes/{{routeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["routes", "{{routeId}}"]
+            },
+            "description": "Update route information"
+          }
+        },
+        {
+          "name": "Delete Route",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/routes/{{routeId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["routes", "{{routeId}}"]
+            },
+            "description": "Delete route"
+          }
+        },
+        {
+          "name": "Create Bus",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"plateNumber\": \"ABC-1234\",\n  \"model\": \"Mercedes Sprinter\",\n  \"capacity\": 30,\n  \"driverId\": \"{{userId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buses",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses"]
+            },
+            "description": "Create a new bus"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const response = pm.response.json();",
+                  "    pm.collectionVariables.set('busId', response.id);",
+                  "    console.log('Bus created with ID:', response.id);",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Get All Buses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buses",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses"]
+            },
+            "description": "Get all buses"
+          }
+        },
+        {
+          "name": "Get Bus by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buses/{{busId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses", "{{busId}}"]
+            },
+            "description": "Get bus by ID"
+          }
+        },
+        {
+          "name": "Update Bus",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"model\": \"Updated Model\",\n  \"capacity\": 35\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buses/{{busId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses", "{{busId}}"]
+            },
+            "description": "Update bus information"
+          }
+        },
+        {
+          "name": "Update Bus Location",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/buses/{{busId}}/location",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses", "{{busId}}", "location"]
+            },
+            "description": "Update bus location (for drivers)"
+          }
+        },
+        {
+          "name": "Delete Bus",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/buses/{{busId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["buses", "{{busId}}"]
+            },
+            "description": "Delete bus"
+          }
+        },
+        {
+          "name": "Create Bus Route Assignment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"busId\": \"{{busId}}\",\n  \"routeId\": \"{{routeId}}\",\n  \"scheduleTime\": \"08:00\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bus-routes",
+              "host": ["{{baseUrl}}"],
+              "path": ["bus-routes"]
+            },
+            "description": "Create a new bus route assignment"
+          }
+        },
+        {
+          "name": "Get All Bus Route Assignments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bus-routes",
+              "host": ["{{baseUrl}}"],
+              "path": ["bus-routes"]
+            },
+            "description": "Get all bus route assignments"
+          }
+        },
+        {
+          "name": "Get Bus Route Assignment by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bus-routes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["bus-routes", "1"]
+            },
+            "description": "Get bus route assignment by ID"
+          }
+        },
+        {
+          "name": "Update Bus Route Assignment",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"scheduleTime\": \"09:00\",\n  \"isActive\": false\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/bus-routes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["bus-routes", "1"]
+            },
+            "description": "Update bus route assignment"
+          }
+        },
+        {
+          "name": "Delete Bus Route Assignment",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/bus-routes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["bus-routes", "1"]
+            },
+            "description": "Delete bus route assignment"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tracking & Location",
+      "description": "Real-time tracking and location management endpoints",
+      "item": [
+        {
+          "name": "Update Bus Location",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"latitude\": 40.7128,\n  \"longitude\": -74.0060,\n  \"speed\": 45,\n  \"direction\": 180\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tracking/bus/{{busId}}/location",
+              "host": ["{{baseUrl}}"],
+              "path": ["tracking", "bus", "{{busId}}", "location"]
+            },
+            "description": "Update bus location (for drivers)"
+          }
+        },
+        {
+          "name": "Get Bus Location History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tracking/bus/{{busId}}/history",
+              "host": ["{{baseUrl}}"],
+              "path": ["tracking", "bus", "{{busId}}", "history"]
+            },
+            "description": "Get bus location history"
+          }
+        },
+        {
+          "name": "Get All Active Bus Locations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tracking/buses/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["tracking", "buses", "active"]
+            },
+            "description": "Get all active bus locations"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI Services",
+      "description": "AI-powered services for route optimization and student assistance",
+      "item": [
+        {
+          "name": "Optimize Route",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"routeId\": \"{{routeId}}\",\n  \"trafficData\": {\n    \"currentTraffic\": \"moderate\",\n    \"weather\": \"clear\"\n  },\n  \"optimizationGoals\": [\"minimize_time\", \"minimize_fuel\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/optimize-route",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "optimize-route"]
+            },
+            "description": "Optimize route using AI algorithms"
+          }
+        },
+        {
+          "name": "Predict Bus Arrival",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"busId\": \"{{busId}}\",\n  \"stopId\": \"stop_001\",\n  \"currentTime\": \"2024-01-15T08:30:00Z\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/predict-arrival",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "predict-arrival"]
+            },
+            "description": "Predict bus arrival time using AI"
+          }
+        },
+        {
+          "name": "Student Query (AI Chatbot)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"When is the next bus to downtown?\",\n  \"studentId\": \"{{userId}}\",\n  \"context\": {\n    \"location\": \"campus\",\n    \"preferredRoute\": \"Route A\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/student-query",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "student-query"]
+            },
+            "description": "Process student query using AI chatbot"
+          }
+        },
+        {
+          "name": "Generate Transportation Insights",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timeRange\": {\n    \"start\": \"2024-01-01\",\n    \"end\": \"2024-01-31\"\n  },\n  \"analysisType\": \"usage_patterns\",\n  \"routes\": [\"{{routeId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/generate-insights",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "generate-insights"]
+            },
+            "description": "Generate transportation insights using AI analytics"
+          }
+        },
+        {
+          "name": "External AI Service Integration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service\": \"weather_api\",\n  \"data\": {\n    \"location\": \"campus\",\n    \"date\": \"2024-01-15\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/external-service",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "external-service"]
+            },
+            "description": "Integrate with external AI services"
+          }
+        }
+      ]
+    }
+  ]
+}
