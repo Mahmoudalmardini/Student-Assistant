@@ -466,6 +466,40 @@ Get all active bus locations.
 
 ---
 
+### 📱 Mobile
+
+#### GET `/mobile/me/summary`
+Get authenticated student summary: name, bus registration status, cumulative and per-semester GPAs with classification, and courses with status.
+
+**Headers:** `Authorization: Bearer <token>`
+
+**Response:**
+```json
+{
+  "name": "Student Name",
+  "busRegistered": true,
+  "cumulativeGpa": { "value": 3.22, "classification": "very good" },
+  "semesterGpas": [
+    { "semesterId": "uuid", "semesterName": "2024-2025 Fall", "value": 3.1, "classification": "very good" }
+  ],
+  "courses": [
+    {
+      "courseId": "uuid",
+      "code": "CS101",
+      "name": "Intro to CS",
+      "creditHours": 3,
+      "semesterId": "uuid",
+      "semesterName": "2024-2025 Fall",
+      "gradeNumeric": 88,
+      "gradePoint": 3.7,
+      "status": "Pass"
+    }
+  ]
+}
+```
+
+---
+
 ## Error Responses
 
 ### Common Error Codes

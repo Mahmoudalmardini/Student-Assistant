@@ -10,9 +10,10 @@ import { BusRoutesController } from './bus-routes.controller';
 import { Bus } from './entities/bus.entity';
 import { Route } from './entities/route.entity';
 import { BusRoute } from './entities/bus-route.entity';
+import { BusRegistration } from './entities/bus-registration.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Bus, Route, BusRoute])],
+  imports: [TypeOrmModule.forFeature([Bus, Route, BusRoute, BusRegistration])],
   controllers: [BusesController, RoutesController, BusRoutesController],
   providers: [BusesService, RoutesService, BusRoutesService],
   exports: [BusesService, RoutesService, BusRoutesService],

@@ -13,6 +13,13 @@ import { Bus } from './core/transportation/entities/bus.entity';
 import { Route } from './core/transportation/entities/route.entity';
 import { BusRoute } from './core/transportation/entities/bus-route.entity';
 import { BusLocation } from './core/tracking/entities/bus-location.entity';
+import { BusRegistration } from './core/transportation/entities/bus-registration.entity';
+import { Semester } from './core/academic/entities/semester.entity';
+import { Course } from './core/academic/entities/course.entity';
+import { Enrollment } from './core/academic/entities/enrollment.entity';
+import { AcademicModule } from './core/academic/academic.module';
+import { TransportationModule } from './core/transportation/transportation.module';
+import { MobileModule } from './core/mobile/mobile.module';
 
 @Module({
   imports: [
@@ -26,12 +33,15 @@ import { BusLocation } from './core/tracking/entities/bus-location.entity';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'password',
       database: process.env.DB_NAME || 'student_assistant',
-      entities: [User, College, Bus, Route, BusRoute, BusLocation],
+      entities: [User, College, Bus, Route, BusRoute, BusLocation, BusRegistration, Semester, Course, Enrollment],
       synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV === 'development',
     }),
     AuthModule,
     UsersModule,
+    AcademicModule,
+    TransportationModule,
+    MobileModule,
   ],
   controllers: [AppController],
   providers: [AppService, SuperAdminSeeder],
