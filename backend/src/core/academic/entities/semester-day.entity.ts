@@ -5,7 +5,7 @@ import { ScheduledSection } from './scheduled-section.entity';
 
 @Entity('semester_days')
 export class SemesterDay extends BaseEntity {
-  @ManyToOne(() => Semester, (sem) => sem.enrollments, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Semester, (sem) => sem.days, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'semesterId' })
   semester: Semester;
 
