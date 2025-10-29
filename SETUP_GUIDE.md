@@ -189,6 +189,10 @@ NODE_ENV=development
 
 # CORS Configuration
 CORS_ORIGIN=http://localhost:4200
+
+# AI / n8n
+N8N_SEMESTER_PLANNER_URL=
+AI_BALANCE_WEIGHT=0.4
 ```
 
 ## Account Management Features

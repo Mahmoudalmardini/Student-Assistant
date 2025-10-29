@@ -79,4 +79,23 @@ export class AiController {
       integrationData.data,
     );
   }
+
+  @Post('semester-plan')
+  @Roles(
+    UserRole.SUPER_ADMIN,
+    UserRole.ADMIN,
+    UserRole.COLLEGE_SUPERVISOR,
+    UserRole.STUDENT,
+  )
+  @ApiOperation({ summary: 'Generate a semester plan using rules + n8n workflow' })
+  async generateSemesterPlan(
+    @Body()
+    dto: {
+      studentId: string;
+      requestedCredits: number;
+      semesterId: string;
+    },
+  ) {
+    return this.aiService.generateSemesterPlan(dto);
+  }
 }

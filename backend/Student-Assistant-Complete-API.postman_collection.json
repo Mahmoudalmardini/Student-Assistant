@@ -1002,6 +1002,25 @@
             },
             "description": "Integrate with external AI services"
           }
+        },
+        {
+          "name": "Semester Planner - Generate Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"studentId\": \"{{userId}}\",\n  \"requestedCredits\": 15,\n  \"semesterId\": \"{{semesterId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/ai/semester-plan",
+              "host": ["{{baseUrl}}"],
+              "path": ["ai", "semester-plan"]
+            },
+            "description": "Generate a semester plan using rules + n8n"
+          }
         }
       ]
     }

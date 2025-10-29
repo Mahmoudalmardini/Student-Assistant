@@ -1,0 +1,35 @@
+{
+  "name": "Semester Planner",
+  "nodes": [
+    {
+      "parameters": {"path": "semester-planner", "options": {"responseData": {}}},
+      "id": "Webhook",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "functionCode": "const body = items[0].json;\nconst eligible = body.eligibleCourses || [];\nconst schedule = body.schedule || [];\n// naive selection: top by credits until requestedCredits\nlet total = 0;\nconst selected = [];\nfor (const c of eligible.sort((a,b)=>b.creditHours-a.creditHours)) {\n  if (total + c.creditHours > body.requestedCredits) continue;\n  const firstSection = schedule.find(s=>s.courseCode===c.code);\n  if (!firstSection) continue;\n  selected.push({ courseCode: c.code, sectionAssignments: [{ type: firstSection.sectionType, dayOfWeek: firstSection.dayOfWeek, slots: firstSection.slots }] });\n  total += c.creditHours;\n}\nitems[0].json = { selectedCourses: selected, rationale: 'Heuristic selection by credits', score: 0.5 };\nreturn items;"
+      },
+      "id": "Function",
+      "name": "Function",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [300, 300]
+    },
+    {
+      "parameters": {},
+      "id": "Respond",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1
+    }
+  ],
+  "connections": {
+    "Webhook": {"main": [[{"node": "Function", "type": "main", "index": 0}]]},
+    "Function": {"main": [[{"node": "Respond", "type": "main", "index": 0}]]}
+  }
+}
+
+

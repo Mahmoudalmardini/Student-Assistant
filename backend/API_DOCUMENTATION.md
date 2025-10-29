@@ -466,6 +466,47 @@ Get all active bus locations.
 
 ---
 
+### 🤖 AI & Semester Planner
+
+#### POST `/ai/semester-plan`
+Generate a semester plan using rules plus an n8n workflow.
+
+**Headers:** `Authorization: Bearer <token>`
+
+**Request Body:**
+```json
+{
+  "studentId": "uuid",
+  "requestedCredits": 15,
+  "semesterId": "uuid"
+}
+```
+
+**Response:**
+```json
+{
+  "studentId": "uuid",
+  "requestedCredits": 15,
+  "assignments": [
+    {
+      "courseCode": "CS101",
+      "sectionAssignments": [
+        { "type": "THEORY", "dayOfWeek": "MON", "slots": ["P1", "P2"] }
+      ]
+    }
+  ],
+  "validation": { "valid": true, "items": [], "totalCredits": 15 },
+  "rationale": "string | null",
+  "score": 0.86,
+  "source": "n8n | fallback"
+}
+```
+
+Environment variables:
+- `N8N_SEMESTER_PLANNER_URL`: n8n webhook URL
+- `AI_BALANCE_WEIGHT`: 0..1 balance weight (default 0.4)
+
+
 ### 📱 Mobile
 
 #### GET `/mobile/me/summary`

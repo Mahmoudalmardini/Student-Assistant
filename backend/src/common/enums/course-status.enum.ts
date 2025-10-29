@@ -1,0 +1,8 @@
+export enum CourseStatus {
+  PASSED = 'PASSED',
+  FAILED = 'FAILED',
+  CONDITIONAL = 'CONDITIONAL',
+  IN_PROGRESS = 'IN_PROGRESS',
+}
+
+

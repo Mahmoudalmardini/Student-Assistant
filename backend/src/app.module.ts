@@ -18,6 +18,13 @@ import { Semester } from './core/academic/entities/semester.entity';
 import { Course } from './core/academic/entities/course.entity';
 import { Enrollment } from './core/academic/entities/enrollment.entity';
 import { AcademicModule } from './core/academic/academic.module';
+import { AiModule } from './core/ai/ai.module';
+import { Prerequisite } from './core/academic/entities/prerequisite.entity';
+import { StudyPlan } from './core/academic/entities/study-plan.entity';
+import { CourseRequirement } from './core/academic/entities/course-requirement.entity';
+import { SemesterDay } from './core/academic/entities/semester-day.entity';
+import { ScheduledSection } from './core/academic/entities/scheduled-section.entity';
+import { StudentCourseStatus } from './core/academic/entities/student-course-status.entity';
 import { TransportationModule } from './core/transportation/transportation.module';
 import { MobileModule } from './core/mobile/mobile.module';
 
@@ -33,7 +40,24 @@ import { MobileModule } from './core/mobile/mobile.module';
       username: process.env.DB_USERNAME || 'postgres',
       password: process.env.DB_PASSWORD || 'password',
       database: process.env.DB_NAME || 'student_assistant',
-      entities: [User, College, Bus, Route, BusRoute, BusLocation, BusRegistration, Semester, Course, Enrollment],
+      entities: [
+        User,
+        College,
+        Bus,
+        Route,
+        BusRoute,
+        BusLocation,
+        BusRegistration,
+        Semester,
+        Course,
+        Enrollment,
+        Prerequisite,
+        StudyPlan,
+        CourseRequirement,
+        SemesterDay,
+        ScheduledSection,
+        StudentCourseStatus,
+      ],
       synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV === 'development',
     }),
@@ -41,6 +65,7 @@ import { MobileModule } from './core/mobile/mobile.module';
     UsersModule,
     AcademicModule,
     TransportationModule,
+    AiModule,
     MobileModule,
   ],
   controllers: [AppController],
