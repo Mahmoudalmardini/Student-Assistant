@@ -38,7 +38,7 @@ export interface UpsertCourseDto {
   creditHours: number;
   hasTheoretical?: boolean;
   hasPractical?: boolean;
-  minCreditsToOpen?: number | null;
+  minCreditsToOpen?: number;
 }
 
 @Injectable()
@@ -61,13 +61,13 @@ export class CoursesService {
   async create(dto: UpsertCourseDto): Promise<Course> {
     const exists = await this.courseRepo.findOne({ where: { code: dto.code } });
     if (exists) throw new BadRequestException('Course code already exists');
-    const created = this.courseRepo.create({ ...dto });
+    const created = this.courseRepo.create({ ...dto, minCreditsToOpen: dto.minCreditsToOpen ?? undefined });
     return this.courseRepo.save(created);
   }
 
   async update(id: string, dto: Partial<UpsertCourseDto>): Promise<Course> {
     const prev = await this.getById(id);
-    await this.courseRepo.update(id, { ...prev, ...dto });
+    await this.courseRepo.update(id, { ...prev, ...dto, minCreditsToOpen: dto.minCreditsToOpen ?? prev.minCreditsToOpen });
     return this.getById(id);
   }
 
@@ -128,11 +128,11 @@ export class CoursesService {
       const existing = await this.courseRepo.findOne({ where: { code: dto.code } });
       let course: Course;
       if (existing) {
-        await this.courseRepo.update(existing.id, { ...existing, ...dto });
-        course = await this.courseRepo.findOne({ where: { id: existing.id } });
+        await this.courseRepo.update(existing.id, { ...existing, ...dto, minCreditsToOpen: dto.minCreditsToOpen ?? existing.minCreditsToOpen });
+        course = (await this.courseRepo.findOne({ where: { id: existing.id } }))!;
         updated++;
       } else {
-        course = await this.courseRepo.save(this.courseRepo.create(dto));
+        course = await this.courseRepo.save(this.courseRepo.create({ ...dto, minCreditsToOpen: dto.minCreditsToOpen ?? undefined }));
         created++;
       }
       // prerequisites by code mapping requires a lookup

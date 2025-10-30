@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { StudyPlansService, CreateStudyPlanDto, UpdateStudyPlanDto } from './study-plans.service';
+import { StudyPlansService } from './study-plans.service';
+import type { CreateStudyPlanDto, UpdateStudyPlanDto } from './study-plans.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';

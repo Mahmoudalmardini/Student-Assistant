@@ -1,6 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { ScheduleService, CreateSemesterDayDto, UpdateSemesterDayDto, CreateScheduledSectionDto, UpdateScheduledSectionDto } from './schedule.service';
+import { ScheduleService } from './schedule.service';
+import type { CreateSemesterDayDto, UpdateSemesterDayDto, CreateScheduledSectionDto, UpdateScheduledSectionDto } from './schedule.service';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';

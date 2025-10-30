@@ -4,8 +4,9 @@ import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
 import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { UserRole } from '../../common/enums/user-roles.enum';
-import { CoursesService, UpsertCourseDto } from './courses.service';
-import { Response } from 'express';
+import { CoursesService } from './courses.service';
+import type { UpsertCourseDto } from './courses.service';
+import type { Response } from 'express';
 import { Res } from '@nestjs/common';
 
 @ApiTags('Academic - Courses')

@@ -90,6 +90,10 @@ Once the server is running, visit:
 - API Documentation: http://localhost:3000/api/docs
 - Application: http://localhost:3000
 
+### Integration Guides
+- Frontend integration: `backend/docs/frontend-integration.md`
+- Mobile integration: `backend/docs/mobile-integration.md`
+
 ## API Endpoints
 
 ### Authentication
