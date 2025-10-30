@@ -47,6 +47,13 @@ export class StudyPlansController {
   remove(@Param('id') id: string) {
     return this.service.remove(id);
   }
+
+  @Get(':id/totals')
+  @Roles(UserRole.SUPER_ADMIN, UserRole.ADMIN, UserRole.COLLEGE_SUPERVISOR)
+  @ApiOperation({ summary: 'Compute totals by bucket for a study plan' })
+  totals(@Param('id') id: string) {
+    return this.service.computeTotalsByBucket(id);
+  }
 }
 
 

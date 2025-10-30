@@ -17,7 +17,11 @@ import { AcademicService } from './academic.service';
 import { StudyPlansService } from './study-plans.service';
 import { StudyPlansController } from './study-plans.controller';
 import { ScheduleService } from './schedule.service';
+import { PrereqService } from './prereq.service';
+import { Program } from './entities/program.entity';
+import { AuditLog } from '../../common/entities/audit-log.entity';
 import { ScheduleController } from './schedule.controller';
+import { PrereqController } from './prereq.controller';
 
 @Module({
   imports: [
@@ -32,10 +36,12 @@ import { ScheduleController } from './schedule.controller';
       SemesterDay,
       ScheduledSection,
       StudentCourseStatus,
+      Program,
+      AuditLog,
     ]),
   ],
-  controllers: [CollegesController, StudyPlansController, ScheduleController],
-  providers: [CollegesService, AcademicService, StudyPlansService, ScheduleService],
-  exports: [CollegesService, AcademicService, StudyPlansService, ScheduleService],
+  controllers: [CollegesController, StudyPlansController, ScheduleController, PrereqController],
+  providers: [CollegesService, AcademicService, StudyPlansService, ScheduleService, PrereqService],
+  exports: [CollegesService, AcademicService, StudyPlansService, ScheduleService, PrereqService],
 })
 export class AcademicModule {}

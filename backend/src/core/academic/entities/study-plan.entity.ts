@@ -1,6 +1,7 @@
-import { Entity, Column, OneToMany } from 'typeorm';
+import { Entity, Column, OneToMany, ManyToOne, JoinColumn } from 'typeorm';
 import { BaseEntity } from '../../../common/entities/base.entity';
 import { CourseRequirement } from './course-requirement.entity';
+import { Program } from './program.entity';
 
 @Entity('study_plans')
 export class StudyPlan extends BaseEntity {
@@ -15,6 +16,13 @@ export class StudyPlan extends BaseEntity {
 
   @OneToMany(() => CourseRequirement, (cr) => cr.studyPlan)
   courseRequirements: CourseRequirement[];
+
+  @ManyToOne(() => Program, { nullable: true, onDelete: 'SET NULL' })
+  @JoinColumn({ name: 'programId' })
+  program?: Program;
+
+  @Column({ nullable: true })
+  programId?: string;
 }
 
 

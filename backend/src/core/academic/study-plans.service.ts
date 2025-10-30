@@ -57,6 +57,15 @@ export class StudyPlansService {
     return plan;
   }
 
+  async computeTotalsByBucket(studyPlanId: string): Promise<Record<string, number>> {
+    const reqs = await this.courseReqRepo.find({ where: { studyPlanId } });
+    const totals: Record<string, number> = {};
+    for (const r of reqs) {
+      totals[r.bucket] = (totals[r.bucket] || 0) + 1;
+    }
+    return totals;
+  }
+
   async update(id: string, dto: UpdateStudyPlanDto) {
     const plan = await this.findOne(id);
     await this.studyPlanRepo.update(id, {
