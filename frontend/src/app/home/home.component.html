@@ -1,0 +1,32 @@
+<div class="home-container">
+  <mat-card class="welcome-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>home</mat-icon>
+        Welcome to Student Assistant
+      </mat-card-title>
+    </mat-card-header>
+    
+    <mat-card-content>
+      @if (currentUser) {
+        <div class="user-info">
+          <h2>Hello, {{ currentUser.firstName }} {{ currentUser.lastName }}!</h2>
+          <div class="user-details">
+            <p><strong>Username:</strong> {{ currentUser.username }}</p>
+            <p><strong>Role:</strong> <span class="role-badge">{{ currentUser.role }}</span></p>
+            <p><strong>User ID:</strong> {{ currentUser.id }}</p>
+          </div>
+        </div>
+      } @else {
+        <p>Loading user information...</p>
+      }
+
+      <div class="actions">
+        <button mat-raised-button (click)="logout()" class="logout-button">
+          <mat-icon>logout</mat-icon>
+          <span>Logout</span>
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

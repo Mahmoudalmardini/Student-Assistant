@@ -30,6 +30,7 @@ services:
       - DATABASE_PASSWORD=postgres
       - DATABASE_NAME=student_assistant
       - JWT_SECRET=your_jwt_secret_key_here
+      - CORS_ORIGIN=http://localhost:4200,http://localhost:80
     depends_on:
       - postgres
     networks:
@@ -37,6 +38,21 @@ services:
     volumes:
       - ./backend:/app
       - /app/node_modules
+
+  # Frontend (Angular)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: student_assistant_frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - student_assistant_network
+    environment:
+      - API_URL=http://localhost:3000
 
 volumes:
   postgres_data:

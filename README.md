@@ -36,11 +36,46 @@ The Student Assistant Backend is built using **NestJS** with **Domain-Driven Des
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js (v18+)
-- PostgreSQL (v13+)
-- Git
+- **Docker Desktop** (for database)
+- **Node.js (v18+)**
+- **npm**
 
-### Backend Setup
+### Easiest Way to Run (Recommended)
+
+#### Windows (PowerShell)
+```powershell
+# Start everything (database, backend, frontend)
+.\start-app.ps1
+```
+
+#### Linux/Mac (Bash)
+```bash
+# Make scripts executable
+chmod +x start-app.sh stop-app.sh
+
+# Start everything
+./start-app.sh
+```
+
+This will automatically:
+1. Start the PostgreSQL database in Docker
+2. Start the backend API server (http://localhost:3000)
+3. Start the frontend development server (http://localhost:4200)
+
+**Access Points:**
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:3000
+- API Documentation: http://localhost:3000/api/docs
+
+**Default Login:**
+- Username: `admin`
+- Password: `admin123`
+
+> 📖 For detailed setup instructions, see [RUN_APP.md](RUN_APP.md)
+
+### Manual Setup (Alternative)
+
+#### Backend Setup
 ```bash
 # Clone the repository
 git clone https://github.com/Mahmoudalmardini/Student-Assistant.git
@@ -49,19 +84,25 @@ cd Student-Assistant/backend
 # Install dependencies
 npm install
 
-# Set up PostgreSQL database
-createdb student_assistant
+# Start database with Docker
+cd ..
+docker-compose up -d postgres
 
-# Configure environment variables
-cp .env.example .env
-# Edit .env with your database credentials
+# Start backend (Windows)
+cd backend
+.\start-local.ps1
 
-# Start the server
-npm run start:dev
+# Or start backend manually (Linux/Mac)
+cd backend
+./start-local.sh
 ```
 
-The API will be available at `http://localhost:3000`
-API Documentation: `http://localhost:3000/api/docs`
+#### Frontend Setup
+```bash
+cd frontend
+npm install
+npm start
+```
 
 ## 📁 Project Structure
 
