@@ -1,0 +1,63 @@
+<mat-sidenav-container class="layout-container">
+  <!-- Sidebar -->
+  <mat-sidenav 
+    mode="side" 
+    [opened]="sidenavOpened"
+    class="sidenav">
+    <div class="sidenav-header">
+      <div class="logo">
+        <mat-icon>school</mat-icon>
+        <span class="logo-text">Student Assistant</span>
+      </div>
+    </div>
+
+    <mat-nav-list class="nav-list">
+      @for (item of visibleMenuItems; track item.route) {
+        <a 
+          mat-list-item 
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact: false}">
+          <mat-icon matListItemIcon>{{ item.icon }}</mat-icon>
+          <span matListItemTitle>{{ item.label }}</span>
+        </a>
+      }
+    </mat-nav-list>
+
+    <div class="sidenav-footer">
+      @if (currentUser) {
+        <div class="user-info">
+          <mat-icon>account_circle</mat-icon>
+          <div class="user-details">
+            <span class="user-name">{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+            <span class="user-role">{{ currentUser.role }}</span>
+          </div>
+        </div>
+        <button mat-icon-button (click)="logout()" class="logout-btn" title="Logout">
+          <mat-icon>logout</mat-icon>
+        </button>
+      }
+    </div>
+  </mat-sidenav>
+
+  <!-- Main Content -->
+  <mat-sidenav-content class="main-content">
+    <mat-toolbar color="primary" class="toolbar">
+      <button mat-icon-button (click)="toggleSidenav()" class="menu-toggle">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span class="toolbar-title">Student Assistant System</span>
+      <span class="spacer"></span>
+      @if (currentUser) {
+        <div class="toolbar-user">
+          <mat-icon>account_circle</mat-icon>
+          <span>{{ currentUser.firstName }} {{ currentUser.lastName }}</span>
+        </div>
+      }
+    </mat-toolbar>
+
+    <div class="content-wrapper">
+      <router-outlet />
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

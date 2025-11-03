@@ -1,0 +1,127 @@
+<div class="account-list-container">
+  <mat-card class="header-card">
+    <div class="header-content">
+      <div>
+        <h1 class="page-title">
+          <mat-icon>account_circle</mat-icon>
+          Account Management
+        </h1>
+        <p class="page-subtitle">Manage user accounts and access permissions</p>
+      </div>
+      <button mat-raised-button color="primary" routerLink="/accounts/new">
+        <mat-icon>add</mat-icon>
+        Create Account
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card class="filters-card">
+    <div class="filters-content">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search by name, username, email...">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="role-filter">
+        <mat-label>Filter by Role</mat-label>
+        <mat-select [(ngModel)]="roleFilter" (selectionChange)="onRoleFilterChange()">
+          <mat-option value="">All Roles</mat-option>
+          <mat-option value="super_admin">Super Admin</mat-option>
+          <mat-option value="admin">Admin</mat-option>
+          <mat-option value="student">Student</mat-option>
+          <mat-option value="bus_driver">Bus Driver</mat-option>
+          <mat-option value="college_supervisor">College Supervisor</mat-option>
+          <mat-option value="transportation_supervisor">Transportation Supervisor</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <mat-card class="table-card">
+      <table mat-table [dataSource]="filteredAccounts" class="accounts-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let account">
+            <div class="name-cell">
+              <mat-icon class="avatar-icon">account_circle</mat-icon>
+              <span>{{ account.firstName }} {{ account.lastName }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Username Column -->
+        <ng-container matColumnDef="username">
+          <th mat-header-cell *matHeaderCellDef>Username</th>
+          <td mat-cell *matCellDef="let account">{{ account.username || account.universityId || '-' }}</td>
+        </ng-container>
+
+        <!-- Role Column -->
+        <ng-container matColumnDef="role">
+          <th mat-header-cell *matHeaderCellDef>Role</th>
+          <td mat-cell *matCellDef="let account">
+            <mat-chip [color]="getRoleColor(account.role)" class="role-chip">
+              {{ account.role }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- University ID Column -->
+        <ng-container matColumnDef="universityId">
+          <th mat-header-cell *matHeaderCellDef>University ID</th>
+          <td mat-cell *matCellDef="let account">{{ account.universityId || '-' }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let account">
+            <mat-chip [color]="account.isActive ? 'primary' : 'warn'">
+              {{ account.isActive ? 'Active' : 'Inactive' }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let account">
+            <button mat-icon-button color="primary" (click)="editAccount(account)" matTooltip="Edit">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteAccount(account)" matTooltip="Delete">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No data row -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div class="no-data">
+              <mat-icon>inbox</mat-icon>
+              <p>No accounts found</p>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </mat-card>
+  }
+</div>

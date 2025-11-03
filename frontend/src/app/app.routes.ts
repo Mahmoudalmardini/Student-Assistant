@@ -8,9 +8,32 @@ export const routes: Routes = [
     canActivate: [loginGuard]
   },
   {
-    path: 'home',
-    loadComponent: () => import('./home/home.component').then(m => m.HomeComponent),
-    canActivate: [authGuard]
+    path: '',
+    loadComponent: () => import('./layout/main-layout.component').then(m => m.MainLayoutComponent),
+    canActivate: [authGuard],
+    children: [
+      {
+        path: 'home',
+        loadComponent: () => import('./home/home.component').then(m => m.HomeComponent)
+      },
+      {
+        path: 'accounts',
+        loadComponent: () => import('./accounts/account-list.component').then(m => m.AccountListComponent)
+      },
+      {
+        path: 'accounts/new',
+        loadComponent: () => import('./accounts/account-form.component').then(m => m.AccountFormComponent)
+      },
+      {
+        path: 'accounts/edit/:id',
+        loadComponent: () => import('./accounts/account-form.component').then(m => m.AccountFormComponent)
+      },
+      {
+        path: '',
+        redirectTo: '/home',
+        pathMatch: 'full'
+      }
+    ]
   },
   {
     path: '',

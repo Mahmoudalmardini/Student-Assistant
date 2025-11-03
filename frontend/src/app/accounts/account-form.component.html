@@ -1,0 +1,256 @@
+<div class="account-form-container">
+  <mat-card class="form-card">
+    <div class="form-header">
+      <h1 class="form-title">
+        <mat-icon>{{ isEditMode ? 'edit' : 'add_circle' }}</mat-icon>
+        {{ isEditMode ? 'Edit Account' : 'Create New Account' }}
+      </h1>
+      <p class="form-subtitle">
+        {{ isEditMode ? 'Update account information' : 'Create a new user account with the specified role' }}
+      </p>
+    </div>
+
+    @if (isLoading) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else {
+      <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="account-form">
+        <!-- Role Selection -->
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Role *</mat-label>
+          <mat-select formControlName="role" [disabled]="isEditMode">
+            <mat-option *ngFor="let role of roles" [value]="role.value">
+              {{ role.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="accountForm.get('role')?.hasError('required')">
+            Role is required
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Admin Fields -->
+        @if (accountForm.get('role')?.value === 'admin') {
+          <div class="form-section">
+            <h3 class="section-title">Admin Information</h3>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>First Name *</mat-label>
+                <input matInput formControlName="firstName">
+                <mat-error *ngIf="accountForm.get('firstName')?.hasError('required')">
+                  First name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Last Name *</mat-label>
+                <input matInput formControlName="lastName">
+                <mat-error *ngIf="accountForm.get('lastName')?.hasError('required')">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username *</mat-label>
+              <input matInput formControlName="username">
+              <mat-error *ngIf="accountForm.get('username')?.hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+
+            @if (!isEditMode) {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Password *</mat-label>
+                  <input matInput type="password" formControlName="password">
+                  <mat-error *ngIf="accountForm.get('password')?.hasError('required')">
+                    Password is required
+                  </mat-error>
+                  <mat-error *ngIf="accountForm.get('password')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm Password *</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword">
+                  <mat-error *ngIf="accountForm.get('confirmPassword')?.hasError('required')">
+                    Please confirm password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            } @else {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>New Password</mat-label>
+                  <input matInput type="password" formControlName="password">
+                  <mat-hint>Leave blank to keep current password</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm New Password</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword">
+                </mat-form-field>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Student Fields -->
+        @if (accountForm.get('role')?.value === 'student') {
+          <div class="form-section">
+            <h3 class="section-title">Student Information</h3>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>First Name *</mat-label>
+                <input matInput formControlName="studentFirstName">
+                <mat-error *ngIf="accountForm.get('studentFirstName')?.hasError('required')">
+                  First name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Last Name *</mat-label>
+                <input matInput formControlName="studentLastName">
+                <mat-error *ngIf="accountForm.get('studentLastName')?.hasError('required')">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>University ID *</mat-label>
+              <input matInput formControlName="universityId">
+              <mat-error *ngIf="accountForm.get('universityId')?.hasError('required')">
+                University ID is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>College ID *</mat-label>
+              <input matInput formControlName="collegeId">
+              <mat-error *ngIf="accountForm.get('collegeId')?.hasError('required')">
+                College ID is required
+              </mat-error>
+            </mat-form-field>
+
+            @if (!isEditMode) {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Password *</mat-label>
+                  <input matInput type="password" formControlName="studentPassword">
+                  <mat-error *ngIf="accountForm.get('studentPassword')?.hasError('required')">
+                    Password is required
+                  </mat-error>
+                  <mat-error *ngIf="accountForm.get('studentPassword')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm Password *</mat-label>
+                  <input matInput type="password" formControlName="studentConfirmPassword">
+                  <mat-error *ngIf="accountForm.get('studentConfirmPassword')?.hasError('required')">
+                    Please confirm password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Driver Fields -->
+        @if (accountForm.get('role')?.value === 'bus_driver') {
+          <div class="form-section">
+            <h3 class="section-title">Driver Information</h3>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>First Name *</mat-label>
+                <input matInput formControlName="driverFirstName">
+                <mat-error *ngIf="accountForm.get('driverFirstName')?.hasError('required')">
+                  First name is required
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Last Name *</mat-label>
+                <input matInput formControlName="driverLastName">
+                <mat-error *ngIf="accountForm.get('driverLastName')?.hasError('required')">
+                  Last name is required
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Username *</mat-label>
+              <input matInput formControlName="driverUsername">
+              <mat-error *ngIf="accountForm.get('driverUsername')?.hasError('required')">
+                Username is required
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Driver License Number *</mat-label>
+              <input matInput formControlName="driverLicenseNumber">
+              <mat-error *ngIf="accountForm.get('driverLicenseNumber')?.hasError('required')">
+                Driver license number is required
+              </mat-error>
+            </mat-form-field>
+
+            @if (!isEditMode) {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Password *</mat-label>
+                  <input matInput type="password" formControlName="driverPassword">
+                  <mat-error *ngIf="accountForm.get('driverPassword')?.hasError('required')">
+                    Password is required
+                  </mat-error>
+                  <mat-error *ngIf="accountForm.get('driverPassword')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm Password *</mat-label>
+                  <input matInput type="password" formControlName="driverConfirmPassword">
+                  <mat-error *ngIf="accountForm.get('driverConfirmPassword')?.hasError('required')">
+                    Please confirm password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
+          </div>
+        }
+
+        <!-- Common Fields -->
+        @if (isEditMode) {
+          <div class="form-section">
+            <h3 class="section-title">Additional Information</h3>
+            <div class="form-row">
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Email</mat-label>
+                <input matInput type="email" formControlName="email">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="half-width">
+                <mat-label>Phone Number</mat-label>
+                <input matInput formControlName="phoneNumber">
+              </mat-form-field>
+            </div>
+          </div>
+        }
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || accountForm.invalid">
+            @if (isSubmitting) {
+              <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+            }
+            {{ isEditMode ? 'Update' : 'Create' }} Account
+          </button>
+        </div>
+      </form>
+    }
+  </mat-card>
+</div>
