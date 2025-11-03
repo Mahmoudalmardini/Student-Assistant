@@ -4,9 +4,9 @@
 }
 
 .sidenav {
-  width: 260px;
-  background: linear-gradient(180deg, #1e88e5 0%, #1976d2 100%);
-  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
+  width: 280px;
+  background: linear-gradient(180deg, #1e88e5 0%, #1565c0 100%);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.12);
   
   .mat-drawer-inner-container {
     display: flex;
@@ -15,83 +15,117 @@
 }
 
 .sidenav-header {
-  padding: 24px 20px;
-  background: rgba(0, 0, 0, 0.1);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 28px 24px;
+  background: rgba(0, 0, 0, 0.15);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
   
   .logo {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 14px;
     color: white;
+    transition: transform 0.2s ease;
+    
+    &:hover {
+      transform: scale(1.02);
+    }
     
     mat-icon {
-      font-size: 32px;
-      width: 32px;
-      height: 32px;
+      font-size: 36px;
+      width: 36px;
+      height: 36px;
       color: white;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 8px;
+      border-radius: 12px;
+      transition: all 0.3s ease;
     }
     
     .logo-text {
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 0.5px;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
 }
 
 .nav-list {
   flex: 1;
-  padding: 16px 0;
+  padding: 20px 0;
   overflow-y: auto;
   
   a {
-    color: rgba(255, 255, 255, 0.9) !important;
-    margin: 4px 12px;
-    border-radius: 8px;
-    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.95) !important;
+    margin: 6px 16px;
+    border-radius: 12px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 500;
+    font-size: 15px;
     
     &:hover {
-      background: rgba(255, 255, 255, 0.1) !important;
+      background: rgba(255, 255, 255, 0.15) !important;
       color: white !important;
+      transform: translateX(4px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
     
     &.active {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: rgba(255, 255, 255, 0.25) !important;
       color: white !important;
       font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-left: 4px solid white;
       
       mat-icon {
         color: white !important;
+        transform: scale(1.1);
       }
     }
     
     mat-icon {
-      color: rgba(255, 255, 255, 0.9);
+      color: rgba(255, 255, 255, 0.95);
       margin-right: 16px;
+      transition: all 0.3s ease;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
     }
   }
 }
 
 .sidenav-footer {
-  padding: 16px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(0, 0, 0, 0.1);
+  padding: 20px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
   
   .user-info {
     display: flex;
     align-items: center;
-    gap: 12px;
-    margin-bottom: 12px;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
+    gap: 14px;
+    margin-bottom: 14px;
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+    
+    &:hover {
+      background: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
     
     mat-icon {
       color: white;
-      font-size: 40px;
-      width: 40px;
-      height: 40px;
+      font-size: 44px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 8px;
+      border-radius: 12px;
     }
     
     .user-details {
@@ -102,13 +136,15 @@
       .user-name {
         color: white;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 15px;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
       }
       
       .user-role {
-        color: rgba(255, 255, 255, 0.8);
+        color: rgba(255, 255, 255, 0.85);
         font-size: 12px;
         text-transform: capitalize;
+        margin-top: 2px;
       }
     }
   }
@@ -116,9 +152,22 @@
   .logout-btn {
     width: 100%;
     color: white;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    height: 44px;
     
     &:hover {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.15) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    
+    mat-icon {
+      transition: transform 0.3s ease;
+    }
+    
+    &:hover mat-icon {
+      transform: translateX(2px);
     }
   }
 }
@@ -131,16 +180,29 @@
 }
 
 .toolbar {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   z-index: 2;
+  background: white !important;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 0 16px;
+  height: 64px;
   
   .menu-toggle {
     margin-right: 16px;
+    color: #475569;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(30, 136, 229, 0.1);
+      color: #1e88e5;
+    }
   }
   
   .toolbar-title {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 20px;
+    font-weight: 600;
+    color: #1e293b;
+    letter-spacing: -0.3px;
   }
   
   .spacer {
@@ -150,13 +212,24 @@
   .toolbar-user {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 14px;
+    font-weight: 500;
+    color: #475569;
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: rgba(30, 136, 229, 0.05);
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: rgba(30, 136, 229, 0.1);
+    }
     
     mat-icon {
       font-size: 24px;
       width: 24px;
       height: 24px;
+      color: #1e88e5;
     }
   }
 }
@@ -165,7 +238,8 @@
   flex: 1;
   overflow-y: auto;
   padding: 24px;
-  background: #f5f5f5;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: calc(100vh - 64px);
 }
 
 /* Responsive */

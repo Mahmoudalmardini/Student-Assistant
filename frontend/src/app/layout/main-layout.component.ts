@@ -61,6 +61,14 @@ export class MainLayoutComponent {
     }
   ];
 
+  isSuperAdmin(): boolean {
+    return this.currentUser?.role === 'super_admin';
+  }
+
+  isAdmin(): boolean {
+    return this.currentUser?.role === 'admin';
+  }
+
   get visibleMenuItems(): MenuItem[] {
     if (!this.currentUser) return [];
     

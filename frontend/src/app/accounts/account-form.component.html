@@ -20,19 +20,30 @@
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Role *</mat-label>
           <mat-select formControlName="role" [disabled]="isEditMode">
-            <mat-option *ngFor="let role of roles" [value]="role.value">
+            <mat-option *ngFor="let role of availableRoles" [value]="role.value">
               {{ role.label }}
             </mat-option>
           </mat-select>
           <mat-error *ngIf="accountForm.get('role')?.hasError('required')">
             Role is required
           </mat-error>
+          @if (isAdmin() && !isSuperAdmin()) {
+            <mat-hint>Admin accounts cannot be created by administrators</mat-hint>
+          }
         </mat-form-field>
 
         <!-- Admin Fields -->
-        @if (accountForm.get('role')?.value === 'admin') {
+        @if (accountForm.get('role')?.value === 'admin' || accountForm.get('role')?.value === 'college_supervisor' || accountForm.get('role')?.value === 'transportation_supervisor') {
           <div class="form-section">
-            <h3 class="section-title">Admin Information</h3>
+            <h3 class="section-title">
+              @if (accountForm.get('role')?.value === 'admin') {
+                Admin Information
+              } @else if (accountForm.get('role')?.value === 'college_supervisor') {
+                College Supervisor Information
+              } @else {
+                Transportation Supervisor Information
+              }
+            </h3>
             <div class="form-row">
               <mat-form-field appearance="outline" class="half-width">
                 <mat-label>First Name *</mat-label>
@@ -80,19 +91,6 @@
                   </mat-error>
                 </mat-form-field>
               </div>
-            } @else {
-              <div class="form-row">
-                <mat-form-field appearance="outline" class="half-width">
-                  <mat-label>New Password</mat-label>
-                  <input matInput type="password" formControlName="password">
-                  <mat-hint>Leave blank to keep current password</mat-hint>
-                </mat-form-field>
-
-                <mat-form-field appearance="outline" class="half-width">
-                  <mat-label>Confirm New Password</mat-label>
-                  <input matInput type="password" formControlName="confirmPassword">
-                </mat-form-field>
-              </div>
             }
           </div>
         }
@@ -124,14 +122,6 @@
               <input matInput formControlName="universityId">
               <mat-error *ngIf="accountForm.get('universityId')?.hasError('required')">
                 University ID is required
-              </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-label>College ID *</mat-label>
-              <input matInput formControlName="collegeId">
-              <mat-error *ngIf="accountForm.get('collegeId')?.hasError('required')">
-                College ID is required
               </mat-error>
             </mat-form-field>
 
@@ -238,6 +228,80 @@
                 <input matInput formControlName="phoneNumber">
               </mat-form-field>
             </div>
+          </div>
+        }
+        
+        <!-- Password Change Section for Super Admin -->
+        @if (isEditMode && canChangePassword()) {
+          <div class="form-section password-change-section">
+            <h3 class="section-title">
+              <mat-icon>lock</mat-icon>
+              Change Password
+            </h3>
+            <p class="password-hint">Enter a new password to change it. Leave blank to keep the current password.</p>
+            
+            @if (accountForm.get('role')?.value === 'admin' || accountForm.get('role')?.value === 'college_supervisor' || accountForm.get('role')?.value === 'transportation_supervisor') {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>New Password</mat-label>
+                  <input matInput type="password" formControlName="password" placeholder="Enter new password">
+                  <mat-hint>Leave blank to keep current password</mat-hint>
+                  <mat-error *ngIf="accountForm.get('password')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm New Password</mat-label>
+                  <input matInput type="password" formControlName="confirmPassword" placeholder="Confirm new password">
+                  <mat-error *ngIf="accountForm.get('confirmPassword')?.hasError('required') && accountForm.get('password')?.value">
+                    Please confirm the new password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
+            
+            @if (accountForm.get('role')?.value === 'student') {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>New Password</mat-label>
+                  <input matInput type="password" formControlName="studentPassword" placeholder="Enter new password">
+                  <mat-hint>Leave blank to keep current password</mat-hint>
+                  <mat-error *ngIf="accountForm.get('studentPassword')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm New Password</mat-label>
+                  <input matInput type="password" formControlName="studentConfirmPassword" placeholder="Confirm new password">
+                  <mat-error *ngIf="accountForm.get('studentConfirmPassword')?.hasError('required') && accountForm.get('studentPassword')?.value">
+                    Please confirm the new password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
+            
+            @if (accountForm.get('role')?.value === 'bus_driver') {
+              <div class="form-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>New Password</mat-label>
+                  <input matInput type="password" formControlName="driverPassword" placeholder="Enter new password">
+                  <mat-hint>Leave blank to keep current password</mat-hint>
+                  <mat-error *ngIf="accountForm.get('driverPassword')?.hasError('minlength')">
+                    Password must be at least 6 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Confirm New Password</mat-label>
+                  <input matInput type="password" formControlName="driverConfirmPassword" placeholder="Confirm new password">
+                  <mat-error *ngIf="accountForm.get('driverConfirmPassword')?.hasError('required') && accountForm.get('driverPassword')?.value">
+                    Please confirm the new password
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            }
           </div>
         }
 
