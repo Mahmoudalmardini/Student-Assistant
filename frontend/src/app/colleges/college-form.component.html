@@ -1,0 +1,80 @@
+<div class="college-form-container">
+  <mat-card class="form-card">
+    <div class="form-header">
+      <h1 class="form-title">
+        <mat-icon>{{ isEditMode ? 'edit' : 'add_circle' }}</mat-icon>
+        {{ isEditMode ? 'Edit College' : 'Create New College' }}
+      </h1>
+      <p class="form-subtitle">
+        {{ isEditMode ? 'Update college information' : 'Add a new college to the system' }}
+      </p>
+    </div>
+
+    @if (isEditMode && showWarning) {
+      <div class="warning-message">
+        <mat-icon>warning</mat-icon>
+        <div>
+          <strong>Warning:</strong> Editing this college may affect associated students and courses. 
+          Please proceed with caution.
+        </div>
+      </div>
+    }
+
+    @if (isLoading) {
+      <div class="loading-container">
+        <mat-spinner></mat-spinner>
+      </div>
+    } @else {
+      <form [formGroup]="collegeForm" (ngSubmit)="onSubmit()" class="college-form">
+        <div class="form-section">
+          <h3 class="section-title">College Information</h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>College Name *</mat-label>
+            <input matInput formControlName="name" placeholder="Enter college name">
+            <mat-icon matPrefix>school</mat-icon>
+            <mat-error *ngIf="collegeForm.get('name')?.hasError('required')">
+              College name is required
+            </mat-error>
+            <mat-error *ngIf="collegeForm.get('name')?.hasError('minlength')">
+              College name must be at least 3 characters
+            </mat-error>
+            <mat-error *ngIf="collegeForm.get('name')?.hasError('maxlength')">
+              College name must not exceed 100 characters
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput formControlName="description" placeholder="Enter college description" rows="4"></textarea>
+            <mat-icon matPrefix>description</mat-icon>
+            <mat-hint>{{ collegeForm.get('description')?.value?.length || 0 }} / 500 characters</mat-hint>
+            <mat-error *ngIf="collegeForm.get('description')?.hasError('maxlength')">
+              Description must not exceed 500 characters
+            </mat-error>
+          </mat-form-field>
+
+          <div class="status-toggle">
+            <mat-slide-toggle formControlName="isActive" color="primary">
+              <span class="toggle-label">
+                <mat-icon>{{ collegeForm.get('isActive')?.value ? 'check_circle' : 'cancel' }}</mat-icon>
+                {{ collegeForm.get('isActive')?.value ? 'Active' : 'Inactive' }}
+              </span>
+            </mat-slide-toggle>
+            <p class="toggle-hint">Set the college's active status. Inactive colleges may not appear in some listings.</p>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button mat-button type="button" (click)="cancel()">Cancel</button>
+          <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || collegeForm.invalid">
+            @if (isSubmitting) {
+              <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+            }
+            {{ isEditMode ? 'Update' : 'Create' }} College
+          </button>
+        </div>
+      </form>
+    }
+  </mat-card>
+</div>

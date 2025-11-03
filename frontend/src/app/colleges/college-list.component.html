@@ -1,0 +1,107 @@
+<div class="college-list-container">
+  <mat-card class="header-card">
+    <div class="header-content">
+      <div>
+        <h1 class="page-title">
+          <mat-icon>school</mat-icon>
+          Colleges Management
+        </h1>
+        <p class="page-subtitle">Manage colleges, departments, and academic divisions</p>
+      </div>
+      <button mat-raised-button color="primary" routerLink="/colleges/new">
+        <mat-icon>add</mat-icon>
+        Add College
+      </button>
+    </div>
+  </mat-card>
+
+  <mat-card class="filters-card">
+    <div class="filters-content">
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (input)="onSearchChange()" placeholder="Search by name or description...">
+        <mat-icon matPrefix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  @if (isLoading) {
+    <div class="loading-container">
+      <mat-spinner></mat-spinner>
+    </div>
+  } @else {
+    <mat-card class="table-card">
+      <table mat-table [dataSource]="filteredColleges" class="colleges-table">
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>College Name</th>
+          <td mat-cell *matCellDef="let college">
+            <div class="name-cell">
+              <mat-icon class="college-icon">school</mat-icon>
+              <span class="college-name">{{ college.name }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell *matCellDef="let college">
+            <span class="description-text">{{ college.description || '-' }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let college">
+            <mat-chip [color]="college.isActive ? 'primary' : 'warn'">
+              {{ college.isActive ? 'Active' : 'Inactive' }}
+            </mat-chip>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let college">
+            <button mat-icon-button color="primary" (click)="editCollege(college)" matTooltip="Edit College">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteCollege(college)" matTooltip="Delete College">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- No data row -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+            <div class="no-data">
+              <mat-icon>school_outline</mat-icon>
+              <p>No colleges found</p>
+              <p style="font-size: 14px; color: #94a3b8; margin-top: 8px;">
+                @if (searchTerm) {
+                  Try adjusting your search criteria
+                } @else {
+                  Get started by adding your first college
+                }
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+      <mat-paginator
+        [length]="totalItems"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        [pageSizeOptions]="[5, 10, 25, 50]"
+        (page)="onPageChange($event)">
+      </mat-paginator>
+    </mat-card>
+  }
+</div>

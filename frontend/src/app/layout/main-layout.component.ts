@@ -54,6 +54,12 @@ export class MainLayoutComponent {
       roles: ['super_admin', 'admin']
     },
     {
+      label: 'Colleges',
+      icon: 'school',
+      route: '/colleges',
+      roles: ['super_admin', 'admin']
+    },
+    {
       label: 'Users',
       icon: 'people',
       route: '/users',

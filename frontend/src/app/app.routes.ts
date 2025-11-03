@@ -29,6 +29,18 @@ export const routes: Routes = [
         loadComponent: () => import('./accounts/account-form.component').then(m => m.AccountFormComponent)
       },
       {
+        path: 'colleges',
+        loadComponent: () => import('./colleges/college-list.component').then(m => m.CollegeListComponent)
+      },
+      {
+        path: 'colleges/new',
+        loadComponent: () => import('./colleges/college-form.component').then(m => m.CollegeFormComponent)
+      },
+      {
+        path: 'colleges/edit/:id',
+        loadComponent: () => import('./colleges/college-form.component').then(m => m.CollegeFormComponent)
+      },
+      {
         path: '',
         redirectTo: '/home',
         pathMatch: 'full'
